@@ -19,11 +19,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         playwright install
-        playwright install-deps
+        playwright install chromium
         
-    - name: Run tests
+    - name: Run tests with reports
       run: |
-        pytest -v tests/
+        # Создаем папки для отчетов
+        mkdir -p test-results html-report
+        # Запускаем тесты с генерацией отчетов
+        pytest tests/ -v --html=html-report/report.html --self-contained-html
         
     - name: Upload test results
       uses: actions/upload-artifact@v4
@@ -31,6 +34,5 @@ jobs:
       with:
         name: test-results
         path: |
-          test-results/
           html-report/
         retention-days: 30
