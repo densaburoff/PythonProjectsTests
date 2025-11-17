@@ -10,4 +10,5 @@ def page(request):
         context = browser.new_context()
         page = context.new_page()
         yield page
+        context.close()  # Добавлено закрытие контекста
         browser.close()
